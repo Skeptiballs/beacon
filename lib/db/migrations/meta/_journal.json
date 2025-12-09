@@ -1,0 +1,132 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1733749200000,
+      "tag": "0000_init",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1733749201000,
+      "tag": "0001_regions",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1733749202000,
+      "tag": "0002_indexes",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1733749203000,
+      "tag": "0003_indexes2",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1733749204000,
+      "tag": "0004_indexes3",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1733749205000,
+      "tag": "0005_add_logo_url",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1733749206000,
+      "tag": "0006_multiple_categories",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1733749207000,
+      "tag": "0007_migrate_categories",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1733749208000,
+      "tag": "0008_drop_category_column",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1733749209000,
+      "tag": "0009_copy_company_data",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1733749210000,
+      "tag": "0010_finalize_migration",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1733749211000,
+      "tag": "0011_rename_companies",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1733749212000,
+      "tag": "0012_category_indexes",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1733749213000,
+      "tag": "0013_category_indexes2",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1733749214000,
+      "tag": "0014_create_companies_new",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "5",
+      "when": 1733749215000,
+      "tag": "0015_copy_company_data",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1733749216000,
+      "tag": "0016_drop_old_companies",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1733749217000,
+      "tag": "0017_rename_companies",
+      "breakpoints": true
+    }
+  ]
+}
