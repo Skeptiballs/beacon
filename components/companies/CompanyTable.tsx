@@ -253,7 +253,7 @@ const columns: ColumnDef<CompanyResponse, unknown>[] = [
       return (
         <div className="grid grid-cols-2 gap-1 w-fit">
           {regions.map((region) => (
-            <Badge key={region} variant="secondary" className="text-xs">
+            <Badge key={region} variant="secondary" className="text-xs w-full justify-center">
               {region}
             </Badge>
           ))}
