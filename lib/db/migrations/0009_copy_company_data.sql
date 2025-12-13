@@ -3,3 +3,5 @@ SELECT id, name, website, linkedin_url, logo_url, hq_country, hq_city, summary, 
 
 
 
+
+

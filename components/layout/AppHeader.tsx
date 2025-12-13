@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { APP_CONFIG, NAV_LINKS } from "@/config/app";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Radar } from "lucide-react";
 
 export function AppHeader() {
@@ -19,7 +20,7 @@ export function AppHeader() {
         </Link>
 
         {/* Navigation links */}
-        <nav className="flex items-center gap-6 text-sm">
+        <nav className="flex items-center gap-6 text-sm flex-1">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
@@ -35,6 +36,11 @@ export function AppHeader() {
             </Link>
           ))}
         </nav>
+
+        {/* Join Waitlist button */}
+        <Button asChild variant="default" size="sm">
+          <Link href="/waitlist">Join Waitlist</Link>
+        </Button>
       </div>
     </header>
   );

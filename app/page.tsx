@@ -1,115 +1,101 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ArrowRight } from "lucide-react";
+import { RadarGraphic } from "@/components/landing/RadarGraphic";
+import { PopularCategories } from "@/components/landing/PopularCategories";
+import { WaitlistSection } from "@/components/landing/WaitlistSection";
 import { APP_CONFIG } from "@/config/app";
-import { Radar, Building2, Package, ArrowRight } from "lucide-react";
 
 export default function LandingPage() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 flex flex-col">
       {/* Hero section */}
-      <section className="relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/50 via-background to-background" />
+      <section className="flex-1 flex items-center justify-center relative overflow-hidden bg-background min-h-[calc(100vh-3.5rem)]">
+        {/* Background gradient effects */}
+        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="container relative max-w-screen-xl py-24 md:py-32 px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center text-center space-y-8">
-            {/* Logo */}
-            <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-              <Radar className="w-10 h-10 text-emerald-500" />
-            </div>
-
-            {/* Headline */}
-            <div className="space-y-4 max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                {APP_CONFIG.name}
+        <div className="container max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12 lg:py-0 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            {/* Left Content */}
+            <div className="space-y-10">
+              <div className="space-y-6">
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]">
+                  Find the right <br/>
+                  software <span className="text-emerald-500">for your port</span>
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground">
-                {APP_CONFIG.tagline}
+                <p className="text-lg sm:text-xl text-muted-foreground/80 max-w-xl leading-relaxed">
+                  Discover and compare maritime technology solutions from 
+                  leading providers worldwide.
               </p>
             </div>
 
-            {/* Description */}
-            <p className="max-w-xl text-muted-foreground">
-              This is an early MVP of Beacon — a customer intelligence platform 
-              designed to help you track companies, understand market dynamics, 
-              and make better decisions about your key accounts.
-            </p>
-
-            {/* CTA */}
-            <div className="flex gap-4">
-              <Link href="/companies">
-                <Button size="lg" className="gap-2">
-                  View Companies
-                  <ArrowRight className="h-4 w-4" />
+              {/* Search Box */}
+              <div className="relative max-w-lg group">
+                {/* Glow effect on hover/focus */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-xl blur opacity-30 group-hover:opacity-75 transition duration-500" />
+                
+                <form action="/companies" className="relative flex items-center">
+                  <Input 
+                    name="q"
+                    placeholder="Search companies, products, categories..." 
+                    className="h-16 pl-6 pr-36 bg-background/80 border-white/10 text-base rounded-xl backdrop-blur-md focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500/50 shadow-sm"
+                  />
+                  <div className="absolute right-2">
+                    <Button 
+                      type="submit" 
+                      size="lg"
+                      className="h-12 px-6 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow-[0_0_15px_-3px_rgba(16,185,129,0.4)] transition-all hover:shadow-[0_0_20px_-3px_rgba(16,185,129,0.6)]"
+                    >
+                      Search
                 </Button>
+                  </div>
+                </form>
+              </div>
+              
+              {/* Links */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-12 pt-4">
+                <Link 
+                  href="/companies" 
+                  className="group flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-emerald-500 transition-colors"
+                >
+                  View all companies 
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link 
+                  href="/news" 
+                  className="group flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-emerald-500 transition-colors"
+                >
+                  Browse news 
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
+              </div>
+            </div>
+
+            {/* Right Content - Radar */}
+            <div className="flex justify-center lg:justify-end relative">
+               <RadarGraphic className="scale-75 sm:scale-90 lg:scale-100" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features preview */}
-      <section className="container max-w-screen-xl py-16 px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card className="border-border/50 bg-card/50">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-emerald-500/10">
-                  <Building2 className="h-5 w-5 text-emerald-500" />
-                </div>
-                <CardTitle className="text-lg">Companies</CardTitle>
-              </div>
-              <CardDescription>
-                Track and organize information about your key customers and prospects.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link href="/companies">
-                <Button variant="outline" className="gap-2">
-                  Explore Companies
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+      {/* Popular Categories */}
+      <PopularCategories />
 
-          <Card className="border-border/50 bg-card/50">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-500/10">
-                  <Package className="h-5 w-5 text-blue-500" />
-                </div>
-                <CardTitle className="text-lg">Products</CardTitle>
-              </div>
-              <CardDescription>
-                Coming soon: Product intelligence to understand competitive offerings.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link href="/products">
-                <Button variant="outline" className="gap-2" disabled>
-                  Coming Soon
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+      {/* Waitlist Section */}
+      <WaitlistSection />
 
-      {/* Footer */}
-      <footer className="border-t">
-        <div className="container max-w-screen-xl py-8 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Radar className="h-4 w-4" />
-              <span>{APP_CONFIG.name}</span>
-            </div>
-            <span>MVP v{APP_CONFIG.version}</span>
+      {/* Simplified Footer (hidden or minimal to match screenshot focus) */}
+      <footer className="border-t border-border/10 bg-background/50 backdrop-blur-sm">
+        <div className="container max-w-screen-xl py-6 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between text-xs text-muted-foreground/60">
+             <p>&copy; {new Date().getFullYear()} {APP_CONFIG.name}. All rights reserved.</p>
+             <p>MVP v{APP_CONFIG.version}</p>
           </div>
         </div>
       </footer>
     </main>
   );
 }
-

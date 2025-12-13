@@ -51,6 +51,15 @@ export const companyCategories = sqliteTable("company_categories", {
   category: text("category").notNull(),
 });
 
+// Waitlist - email addresses for early access
+export const waitlist = sqliteTable("waitlist", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  email: text("email").notNull().unique(),
+  created_at: text("created_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
 // Relations for type-safe joins
 export const companiesRelations = relations(companies, ({ many }) => ({
   regions: many(companyRegions),
@@ -88,4 +97,6 @@ export type CompanyCategory = typeof companyCategories.$inferSelect;
 export type NewCompanyCategory = typeof companyCategories.$inferInsert;
 export type CompanyNote = typeof companyNotes.$inferSelect;
 export type NewCompanyNote = typeof companyNotes.$inferInsert;
+export type WaitlistEntry = typeof waitlist.$inferSelect;
+export type NewWaitlistEntry = typeof waitlist.$inferInsert;
 

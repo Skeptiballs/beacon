@@ -3,3 +3,5 @@ SELECT id, category FROM companies WHERE category IS NOT NULL;
 
 
 
+
+
