@@ -17,7 +17,14 @@ export default function CompaniesPage() {
 
   // Check if any filters are active
   const hasActiveFilters = useMemo(() => {
-    return !!(filters.search || filters.region || filters.category);
+    return !!(
+      filters.search ||
+      filters.region ||
+      filters.category ||
+      filters.hq_country ||
+      filters.employees ||
+      filters.starred !== undefined
+    );
   }, [filters]);
 
   return (

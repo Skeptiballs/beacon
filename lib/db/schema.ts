@@ -12,10 +12,23 @@ export const companies = sqliteTable("companies", {
   hq_city: text("hq_city"),
   summary: text("summary"),
   employees: text("employees"),
+  starred: integer("starred", { mode: "boolean" }).notNull().default(false),
   created_at: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
   updated_at: text("updated_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Company notes - simple note entries tied to a company
+export const companyNotes = sqliteTable("company_notes", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  company_id: integer("company_id")
+    .notNull()
+    .references(() => companies.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  created_at: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
 });
@@ -42,6 +55,7 @@ export const companyCategories = sqliteTable("company_categories", {
 export const companiesRelations = relations(companies, ({ many }) => ({
   regions: many(companyRegions),
   categories: many(companyCategories),
+  notes: many(companyNotes),
 }));
 
 export const companyRegionsRelations = relations(companyRegions, ({ one }) => ({
@@ -58,6 +72,13 @@ export const companyCategoriesRelations = relations(companyCategories, ({ one })
   }),
 }));
 
+export const companyNotesRelations = relations(companyNotes, ({ one }) => ({
+  company: one(companies, {
+    fields: [companyNotes.company_id],
+    references: [companies.id],
+  }),
+}));
+
 // Types inferred from schema
 export type Company = typeof companies.$inferSelect;
 export type NewCompany = typeof companies.$inferInsert;
@@ -65,4 +86,6 @@ export type CompanyRegion = typeof companyRegions.$inferSelect;
 export type NewCompanyRegion = typeof companyRegions.$inferInsert;
 export type CompanyCategory = typeof companyCategories.$inferSelect;
 export type NewCompanyCategory = typeof companyCategories.$inferInsert;
+export type CompanyNote = typeof companyNotes.$inferSelect;
+export type NewCompanyNote = typeof companyNotes.$inferInsert;
 

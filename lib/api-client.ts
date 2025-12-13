@@ -3,6 +3,7 @@ import {
   CreateCompanyInput,
   CompanyFilters,
   ListResponse,
+  CompanyNote,
 } from "./types";
 
 // Base URL for API calls (relative for Next.js)
@@ -38,6 +39,8 @@ function buildQueryString(filters?: CompanyFilters): string {
   if (filters.region) params.set("region", filters.region);
   if (filters.category) params.set("category", filters.category);
   if (filters.hq_country) params.set("hq_country", filters.hq_country);
+  if (filters.starred !== undefined) params.set("starred", String(filters.starred));
+  if (filters.employees) params.set("employees", filters.employees);
 
   const queryString = params.toString();
   return queryString ? `?${queryString}` : "";
@@ -66,9 +69,40 @@ export const companiesApi = {
       body: JSON.stringify(data),
     }),
 
+  // Toggle starred flag for a company
+  toggleStar: (id: number, starred: boolean): Promise<CompanyResponse> =>
+    apiFetch(`/companies/${id}/star`, {
+      method: "PATCH",
+      body: JSON.stringify({ starred }),
+    }),
+
   // Delete company by ID
   delete: (id: number): Promise<{ success: boolean; id: number }> =>
     apiFetch(`/companies/${id}`, {
+      method: "DELETE",
+    }),
+
+  // List notes for a company
+  listNotes: (companyId: number): Promise<CompanyNote[]> =>
+    apiFetch(`/companies/${companyId}/notes`),
+
+  // Create a note for a company
+  createNote: (companyId: number, content: string): Promise<CompanyNote> =>
+    apiFetch(`/companies/${companyId}/notes`, {
+      method: "POST",
+      body: JSON.stringify({ content }),
+    }),
+
+  // Update a company note
+  updateNote: (companyId: number, noteId: number, content: string): Promise<CompanyNote> =>
+    apiFetch(`/companies/${companyId}/notes/${noteId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ content }),
+    }),
+
+  // Delete a company note
+  deleteNote: (companyId: number, noteId: number): Promise<{ success: boolean; id: number }> =>
+    apiFetch(`/companies/${companyId}/notes/${noteId}`, {
       method: "DELETE",
     }),
 };

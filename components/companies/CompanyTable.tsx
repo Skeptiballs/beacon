@@ -11,7 +11,7 @@ import {
   ColumnDef,
 } from "@tanstack/react-table";
 import { CompanyResponse, CompanySortOption } from "@/lib/types";
-import { useDeleteCompany } from "@/hooks/useCompanies";
+import { useDeleteCompany, useToggleCompanyStar } from "@/hooks/useCompanies";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,7 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Building2, ExternalLink, Eye, Linkedin, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { Building2, ExternalLink, Eye, Linkedin, MoreVertical, Pencil, Star, Trash2 } from "lucide-react";
 import { EditCompanyDialog } from "./EditCompanyDialog";
 
 interface CompanyTableProps {
@@ -119,7 +119,43 @@ function ActionsCell({ company }: { company: CompanyResponse }) {
   );
 }
 
+function StarCell({ company }: { company: CompanyResponse }) {
+  const toggleStar = useToggleCompanyStar();
+  const isUpdating =
+    toggleStar.isPending && toggleStar.variables?.id === company.id;
+
+  const handleToggle = () => {
+    toggleStar.mutate({ id: company.id, starred: !company.starred });
+  };
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="h-8 w-8"
+      aria-pressed={company.starred}
+      onClick={handleToggle}
+      disabled={isUpdating}
+    >
+      <Star
+        className={`h-4 w-4 ${
+          company.starred ? "fill-amber-400 text-amber-500" : "text-muted-foreground"
+        }`}
+      />
+      <span className="sr-only">
+        {company.starred ? "Unstar company" : "Star company"}
+      </span>
+    </Button>
+  );
+}
+
 const columns: ColumnDef<CompanyResponse, unknown>[] = [
+  columnHelper.display({
+    id: "starred",
+    header: "",
+    cell: ({ row }) => <StarCell company={row.original} />,
+    size: 40,
+  }),
   columnHelper.display({
     id: "logo",
     header: "",
@@ -242,6 +278,18 @@ const columns: ColumnDef<CompanyResponse, unknown>[] = [
         </div>
       );
     },
+  }),
+  columnHelper.accessor("employees", {
+    header: "Employees",
+    cell: (info) => {
+      const employees = info.getValue();
+      return employees ? (
+        <span className="font-mono text-xs">{employees}</span>
+      ) : (
+        <span className="text-muted-foreground">—</span>
+      );
+    },
+    size: 120,
   }),
   // Actions column with kebab menu
   columnHelper.display({

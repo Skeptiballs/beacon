@@ -12,3 +12,6 @@ CREATE TABLE companies_new (
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
+

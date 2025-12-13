@@ -10,9 +10,35 @@ export type CategoryCode =
   | "CS"
   | "PDMS"
   | "AIS"
-  | "TOS";
+  | "TOS"
+  | "MD";
 
 // Company response shape from API
+export type EmployeeRange =
+  | "1-10"
+  | "11-50"
+  | "51-200"
+  | "201-500"
+  | "501-1000"
+  | "1001-5000"
+  | "5001-10000"
+  | "10001+";
+
+export type AgentStepStatus = "pending" | "active" | "done";
+
+export type AgentStep = {
+  id: string;
+  label: string;
+  status: AgentStepStatus;
+};
+
+export type EnrichmentEvent =
+  | { type: "step-start"; stepId: string; label?: string }
+  | { type: "step-complete"; stepId: string }
+  | { type: "partial-suggestion"; data?: Partial<CreateCompanyInput & { name?: string }> }
+  | { type: "suggestions"; data?: (CreateCompanyInput & { name: string }) | null; steps?: AgentStep[] }
+  | { type: "error"; message?: string };
+
 export type CompanyResponse = {
   id: number;
   name: string;
@@ -23,10 +49,18 @@ export type CompanyResponse = {
   hq_city: string | null;
   categories: CategoryCode[];
   summary: string | null;
-  employees: string | null;
+  employees: EmployeeRange | null;
   regions: RegionCode[];
+  starred: boolean;
   created_at: string;
   updated_at: string;
+};
+
+export type CompanyNote = {
+  id: number;
+  company_id: number;
+  content: string;
+  created_at: string;
 };
 
 // Payload for creating a new company
@@ -39,8 +73,9 @@ export type CreateCompanyInput = {
   hq_city?: string;
   categories?: CategoryCode[];
   summary?: string;
-  employees?: string;
+  employees?: EmployeeRange;
   regions?: RegionCode[];
+  starred?: boolean;
 };
 
 // Sort options for companies
@@ -52,6 +87,8 @@ export type CompanyFilters = {
   region?: RegionCode;
   category?: CategoryCode;
   hq_country?: string;
+  starred?: boolean;
+  employees?: EmployeeRange;
   sortBy?: CompanySortOption;
 };
 
@@ -59,6 +96,11 @@ export type CompanyFilters = {
 export type ListResponse<T> = {
   data: T[];
   total: number;
+};
+
+export type EnrichmentResponse = {
+  suggestions: (CreateCompanyInput & { name: string }) | null;
+  steps?: AgentStep[];
 };
 
 // API error response

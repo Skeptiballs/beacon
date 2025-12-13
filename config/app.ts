@@ -11,5 +11,6 @@ export const APP_CONFIG = {
 export const NAV_LINKS = [
   { href: "/companies", label: "Companies" },
   { href: "/products", label: "Products" },
+  { href: "/news", label: "News" },
 ] as const;
 

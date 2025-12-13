@@ -21,3 +21,6 @@ console.log("Migrations complete!");
 
 sqlite.close();
 
+
+
+

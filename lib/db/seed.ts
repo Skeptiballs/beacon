@@ -26,7 +26,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Tidalis provides vessel traffic services and maritime traffic management solutions for ports and coastal authorities worldwide.",
-    employees: "50-200",
+    employees: "51-200",
     regions: ["EU", "AP", "NA"],
   },
   {
@@ -38,7 +38,7 @@ const sampleCompanies = [
     categories: ["HW"],
     summary:
       "HENSOLDT develops sensor solutions for defense and security applications, including radar and electronic warfare systems.",
-    employees: "5000+",
+    employees: "5001-10000",
     regions: ["EU", "AP"],
   },
   {
@@ -50,7 +50,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Kongsberg is a leading maritime technology company providing vessel traffic management, autonomous systems, and digital solutions.",
-    employees: "1000-5000",
+    employees: "1001-5000",
     regions: ["EU", "NA", "AP"],
   },
   {
@@ -62,7 +62,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Indra delivers air traffic management, vessel traffic services, and defense electronics for governments and enterprises.",
-    employees: "5000+",
+    employees: "5001-10000",
     regions: ["EU", "LA", "AP"],
   },
   {
@@ -74,7 +74,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Navielektro specializes in vessel traffic service solutions for the Baltic region and Scandinavian waters.",
-    employees: "10-50",
+    employees: "11-50",
     regions: ["EU"],
   },
   {
@@ -86,7 +86,7 @@ const sampleCompanies = [
     categories: ["HW"],
     summary:
       "Leonardo is a global aerospace and defense company providing radar, electronics, and security systems.",
-    employees: "5000+",
+    employees: "5001-10000",
     regions: ["EU", "NA", "AP"],
   },
   {
@@ -98,7 +98,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Thales provides mission-critical digital solutions for aerospace, defense, and transportation sectors.",
-    employees: "5000+",
+    employees: "5001-10000",
     regions: ["EU", "NA", "LA", "AP"],
   },
   {
@@ -110,7 +110,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Saab develops defense and security solutions, including surveillance systems and vessel traffic services.",
-    employees: "1000-5000",
+    employees: "1001-5000",
     regions: ["EU", "NA", "AP"],
   },
   {
@@ -122,7 +122,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Signalis provides integrated vessel traffic and port management systems for maritime authorities.",
-    employees: "50-200",
+    employees: "51-200",
     regions: ["EU", "AP"],
   },
   {
@@ -134,7 +134,7 @@ const sampleCompanies = [
     categories: ["VTS"],
     summary:
       "Wärtsilä offers smart marine and energy solutions, including vessel traffic management and fleet optimization.",
-    employees: "5000+",
+    employees: "5001-10000",
     regions: ["EU", "NA", "AP"],
   },
 ];

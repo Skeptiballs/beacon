@@ -12,9 +12,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useUpdateCompany } from "@/hooks/useCompanies";
 import { CATEGORY_CODES } from "@/lib/categories";
 import { REGION_CODES, REGION_LABELS } from "@/lib/regions";
+import { EMPLOYEE_RANGE_OPTIONS, EmployeeRange } from "@/lib/employees";
 import { CompanyResponse, CreateCompanyInput, RegionCode, CategoryCode } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 
@@ -34,7 +42,7 @@ export function EditCompanyDialog({ company, open, onOpenChange }: EditCompanyDi
     hq_city: "",
     categories: [],
     summary: "",
-    employees: "",
+    employees: undefined,
     regions: [],
   });
   
@@ -52,7 +60,7 @@ export function EditCompanyDialog({ company, open, onOpenChange }: EditCompanyDi
         hq_city: company.hq_city || "",
         categories: company.categories || [],
         summary: company.summary || "",
-        employees: company.employees || "",
+        employees: company.employees || undefined,
         regions: company.regions || [],
       });
     }
@@ -231,12 +239,23 @@ export function EditCompanyDialog({ company, open, onOpenChange }: EditCompanyDi
             {/* Employees */}
             <div className="grid gap-2">
               <Label htmlFor="edit-employees">Employees</Label>
-              <Input
-                id="edit-employees"
+              <Select
                 value={formData.employees || ""}
-                onChange={(e) => setFormData({ ...formData, employees: e.target.value })}
-                placeholder="e.g., 50-200"
-              />
+                onValueChange={(value) =>
+                  setFormData({ ...formData, employees: value as EmployeeRange })
+                }
+              >
+                <SelectTrigger id="edit-employees">
+                  <SelectValue placeholder="Select a range" />
+                </SelectTrigger>
+                <SelectContent>
+                  {EMPLOYEE_RANGE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Summary */}

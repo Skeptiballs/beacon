@@ -21,8 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCreateCompany } from "@/hooks/useCompanies";
-import { CATEGORY_CODES, CATEGORY_LABELS } from "@/lib/categories";
+import { CATEGORY_CODES } from "@/lib/categories";
 import { REGION_CODES, REGION_LABELS } from "@/lib/regions";
+import { EMPLOYEE_RANGE_OPTIONS, EmployeeRange } from "@/lib/employees";
 import { CreateCompanyInput, RegionCode, CategoryCode } from "@/lib/types";
 import { Plus, Loader2 } from "lucide-react";
 
@@ -35,7 +36,7 @@ const initialFormState: CreateCompanyInput = {
   hq_city: "",
   categories: [],
   summary: "",
-  employees: "",
+  employees: undefined,
   regions: [],
 };
 
@@ -222,12 +223,23 @@ export function AddCompanyDialog() {
             {/* Employees */}
             <div className="grid gap-2">
               <Label htmlFor="employees">Employees</Label>
-              <Input
-                id="employees"
+              <Select
                 value={formData.employees || ""}
-                onChange={(e) => setFormData({ ...formData, employees: e.target.value })}
-                placeholder="e.g., 50-200"
-              />
+                onValueChange={(value) =>
+                  setFormData({ ...formData, employees: value as EmployeeRange })
+                }
+              >
+                <SelectTrigger id="employees">
+                  <SelectValue placeholder="Select a range" />
+                </SelectTrigger>
+                <SelectContent>
+                  {EMPLOYEE_RANGE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Summary */}

@@ -6,3 +6,6 @@ CREATE TABLE IF NOT EXISTS company_regions (
     UNIQUE(company_id, region)
 );
 
+
+
+

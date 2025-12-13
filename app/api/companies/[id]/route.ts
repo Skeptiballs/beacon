@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, schema } from "@/lib/db";
 import { eq } from "drizzle-orm";
+import { normalizeEmployeeRange } from "@/lib/employees";
 import { CompanyResponse, RegionCode, CategoryCode } from "@/lib/types";
 
 // Transform database company + regions to API response shape
@@ -19,8 +20,9 @@ function toCompanyResponse(
     hq_city: company.hq_city,
     categories: categories as CategoryCode[],
     summary: company.summary,
-    employees: company.employees,
+    employees: normalizeEmployeeRange(company.employees) || null,
     regions: regions as RegionCode[],
+    starred: !!company.starred,
     created_at: company.created_at,
     updated_at: company.updated_at,
   };
@@ -132,6 +134,11 @@ export async function PUT(
       );
     }
 
+    // Normalize employees into supported ranges
+    const employees = normalizeEmployeeRange(
+      typeof body.employees === "string" ? body.employees : undefined
+    );
+
     // Update company
     const updatedCompany = db
       .update(schema.companies)
@@ -143,7 +150,11 @@ export async function PUT(
         hq_country: body.hq_country ? body.hq_country.toUpperCase() : null,
         hq_city: body.hq_city || null,
         summary: body.summary || null,
-        employees: body.employees || null,
+        employees: employees || null,
+        starred:
+          typeof body.starred === "boolean"
+            ? body.starred
+            : existingCompany.starred,
         updated_at: new Date().toISOString(),
       })
       .where(eq(schema.companies.id, id))

@@ -10,10 +10,11 @@ export const CATEGORY_LABELS: Record<CategoryCode, string> = {
   PDMS: "Pilot Dispatch Management Systems",
   AIS: "AIS Network Management",
   TOS: "Terminal Operating Systems",
+  MD: "Marine Data",
 };
 
 // All available category codes
-export const CATEGORY_CODES: CategoryCode[] = ["VTS", "HW", "PMIS", "PCS", "CS", "PDMS", "AIS", "TOS"];
+export const CATEGORY_CODES: CategoryCode[] = ["VTS", "HW", "PMIS", "PCS", "CS", "PDMS", "AIS", "TOS", "MD"];
 
 // Get display label for a category code
 export function getCategoryLabel(code: CategoryCode): string {

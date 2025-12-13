@@ -127,6 +127,41 @@
       "when": 1733749217000,
       "tag": "0017_rename_companies",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1733749218000,
+      "tag": "0018_normalize_employee_ranges",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1733749219000,
+      "tag": "0019_add_starred_flag",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1733749220000,
+      "tag": "0020_create_starred_index",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1733960000000,
+      "tag": "0021_create_company_notes",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1733960005000,
+      "tag": "0022_create_company_notes_index",
+      "breakpoints": true
     }
   ]
 }

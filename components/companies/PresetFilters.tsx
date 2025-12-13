@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { CompanyFilters } from "@/lib/types";
-import { Ship, Globe2, MapPin } from "lucide-react";
+import { Ship, Globe2, MapPin, Star } from "lucide-react";
 
 interface PresetFiltersProps {
   filters: CompanyFilters;
@@ -16,6 +16,11 @@ interface PresetFilter {
 }
 
 const PRESET_FILTERS: PresetFilter[] = [
+  {
+    label: "Starred",
+    icon: <Star className="h-4 w-4" />,
+    filters: { starred: true },
+  },
   {
     label: "VTS Providers",
     icon: <Ship className="h-4 w-4" />,
@@ -38,13 +43,16 @@ function isPresetActive(currentFilters: CompanyFilters, presetFilters: CompanyFi
   const currentCategory = currentFilters.category || undefined;
   const currentRegion = currentFilters.region || undefined;
   const currentHqCountry = currentFilters.hq_country || undefined;
+  const currentStarred = currentFilters.starred ?? undefined;
   const presetCategory = presetFilters.category || undefined;
   const presetRegion = presetFilters.region || undefined;
   const presetHqCountry = presetFilters.hq_country || undefined;
+  const presetStarred = presetFilters.starred ?? undefined;
   
   return currentCategory === presetCategory && 
          currentRegion === presetRegion && 
-         currentHqCountry === presetHqCountry;
+         currentHqCountry === presetHqCountry &&
+         currentStarred === presetStarred;
 }
 
 export function PresetFilters({ filters, onFiltersChange }: PresetFiltersProps) {
@@ -62,6 +70,9 @@ export function PresetFilters({ filters, onFiltersChange }: PresetFiltersProps) 
       }
       if (preset.filters.hq_country !== undefined) {
         delete newFilters.hq_country;
+      }
+      if (preset.filters.starred !== undefined) {
+        delete newFilters.starred;
       }
       
       onFiltersChange(newFilters);

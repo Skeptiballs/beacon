@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, schema } from "@/lib/db";
-import { eq, like, or, and, sql } from "drizzle-orm";
+import { eq, like, or, and } from "drizzle-orm";
+import { normalizeEmployeeRange } from "@/lib/employees";
 import { CompanyResponse, RegionCode, CategoryCode } from "@/lib/types";
 
 // Transform database company + regions to API response shape
@@ -19,8 +20,9 @@ function toCompanyResponse(
     hq_city: company.hq_city,
     categories: categories as CategoryCode[],
     summary: company.summary,
-    employees: company.employees,
+    employees: normalizeEmployeeRange(company.employees) || null,
     regions: regions as RegionCode[],
+    starred: !!company.starred,
     created_at: company.created_at,
     updated_at: company.updated_at,
   };
@@ -34,6 +36,16 @@ export async function GET(request: NextRequest) {
     const region = searchParams.get("region") as RegionCode | null;
     const category = searchParams.get("category") as CategoryCode | null;
     const hq_country = searchParams.get("hq_country");
+    const employees = searchParams.get("employees");
+    const starredParam = searchParams.get("starred");
+    const starred =
+      starredParam === null
+        ? null
+        : starredParam === "true" || starredParam === "1"
+        ? true
+        : starredParam === "false" || starredParam === "0"
+        ? false
+        : null;
 
     // Build base query conditions
     const conditions = [];
@@ -58,6 +70,14 @@ export async function GET(request: NextRequest) {
           or(...countries.map(c => eq(schema.companies.hq_country, c)))
         );
       }
+    }
+
+    if (employees) {
+      conditions.push(eq(schema.companies.employees, normalizeEmployeeRange(employees)));
+    }
+
+    if (starred !== null) {
+      conditions.push(eq(schema.companies.starred, starred));
     }
 
     // Get companies with conditions
@@ -150,6 +170,13 @@ export async function POST(request: NextRequest) {
       body.hq_country = countryCode;
     }
 
+    // Normalize employees into supported ranges
+    const employees = normalizeEmployeeRange(
+      typeof body.employees === "string" ? body.employees : undefined
+    );
+
+    const starredValue = typeof body.starred === "boolean" ? body.starred : false;
+
     // Insert company
     const newCompany = db
       .insert(schema.companies)
@@ -161,7 +188,8 @@ export async function POST(request: NextRequest) {
         hq_country: body.hq_country ? body.hq_country.toUpperCase() : null,
         hq_city: body.hq_city || null,
         summary: body.summary || null,
-        employees: body.employees || null,
+        employees: employees || null,
+        starred: starredValue,
       })
       .returning()
       .get();
