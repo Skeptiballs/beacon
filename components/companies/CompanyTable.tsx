@@ -251,7 +251,7 @@ const columns: ColumnDef<CompanyResponse, unknown>[] = [
         return <span className="text-muted-foreground">—</span>;
       }
       return (
-        <div className="flex flex-wrap gap-1">
+        <div className="grid grid-cols-2 gap-1 w-fit">
           {regions.map((region) => (
             <Badge key={region} variant="secondary" className="text-xs">
               {region}
