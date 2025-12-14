@@ -1,19 +1,5 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { db } from "./index";
 import { companies, companyRegions, companyCategories } from "./schema";
-import path from "path";
-import fs from "fs";
-
-// Ensure data directory exists
-const dataDir = path.join(process.cwd(), "data");
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-
-const dbPath = path.join(dataDir, "beacon.db");
-const sqlite = new Database(dbPath);
-sqlite.pragma("foreign_keys = ON");
-const db = drizzle(sqlite);
 
 // Sample company data for the MVP
 const sampleCompanies = [
@@ -143,20 +129,20 @@ async function seed() {
   console.log("Seeding database...");
 
   // Clear existing data
-  db.delete(companyCategories).run();
-  db.delete(companyRegions).run();
-  db.delete(companies).run();
+  await db.delete(companyCategories).run();
+  await db.delete(companyRegions).run();
+  await db.delete(companies).run();
 
   for (const companyData of sampleCompanies) {
     const { regions, categories, ...company } = companyData;
 
     // Insert company
-    const result = db.insert(companies).values(company).returning().get();
+    const result = await db.insert(companies).values(company).returning().get();
 
     // Insert regions
     if (regions && regions.length > 0) {
       for (const region of regions) {
-        db.insert(companyRegions)
+        await db.insert(companyRegions)
           .values({
             company_id: result.id,
             region,
@@ -168,7 +154,7 @@ async function seed() {
     // Insert categories
     if (categories && categories.length > 0) {
       for (const category of categories) {
-        db.insert(companyCategories)
+        await db.insert(companyCategories)
           .values({
             company_id: result.id,
             category,
@@ -184,6 +170,4 @@ async function seed() {
 }
 
 seed()
-  .catch(console.error)
-  .finally(() => sqlite.close());
-
+  .catch(console.error);

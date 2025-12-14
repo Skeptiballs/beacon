@@ -101,7 +101,19 @@ async function fixSpecificCompanyLogos() {
     .where(like(schema.companies.name, "%Awake%"))
     .all();
 
-  const companiesToFix = [...actualIT, ...awakeAI];
+  const seaAI = db
+    .select()
+    .from(schema.companies)
+    .where(like(schema.companies.name, "%sea.ai%"))
+    .all();
+
+  const captainAI = db
+    .select()
+    .from(schema.companies)
+    .where(like(schema.companies.name, "%captain.ai%"))
+    .all();
+
+  const companiesToFix = [...actualIT, ...awakeAI, ...seaAI, ...captainAI];
 
   if (companiesToFix.length === 0) {
     console.log("No companies found to fix.");

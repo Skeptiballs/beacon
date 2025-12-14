@@ -1,32 +1,23 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
 import * as schema from "./schema";
 import path from "path";
-import fs from "fs";
+import * as dotenv from "dotenv";
 
-// Ensure data directory exists
-const dataDir = path.join(process.cwd(), "data");
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
+dotenv.config({ path: ".env.local" });
+dotenv.config();
 
-// Database file path
-const dbPath = path.join(dataDir, "beacon.db");
+// This will use your local file in dev, and Turso in production if env vars are set
+const dbPath = path.join(process.cwd(), "data", "beacon.db");
+const url = process.env.TURSO_DATABASE_URL || `file:${dbPath}`;
+const authToken = process.env.TURSO_AUTH_TOKEN;
 
-// Create SQLite connection
-const sqlite = new Database(dbPath);
+const client = createClient({
+  url,
+  authToken,
+});
 
-// Enable foreign keys
-sqlite.pragma("foreign_keys = ON");
-
-// Create Drizzle ORM instance with schema for relational queries
-export const db = drizzle(sqlite, { schema });
+export const db = drizzle(client, { schema });
 
 // Export schema for use in queries
 export { schema };
-
-
-
-
-
-

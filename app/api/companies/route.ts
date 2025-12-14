@@ -89,13 +89,13 @@ export async function GET(request: NextRequest) {
       ) as typeof companiesQuery;
     }
 
-    const companiesList = companiesQuery.all();
+    const companiesList = await companiesQuery.all();
 
     // Get all regions
-    const allRegions = db.select().from(schema.companyRegions).all();
+    const allRegions = await db.select().from(schema.companyRegions).all();
 
     // Get all categories
-    const allCategories = db.select().from(schema.companyCategories).all();
+    const allCategories = await db.select().from(schema.companyCategories).all();
 
     // Group regions by company
     const regionsByCompany = new Map<number, string[]>();
@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
     const starredValue = typeof body.starred === "boolean" ? body.starred : false;
 
     // Insert company
-    const newCompany = db
+    const newCompany = await db
       .insert(schema.companies)
       .values({
         name: body.name.trim(),
@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
     // Insert regions if provided
     const regions: string[] = body.regions || [];
     for (const region of regions) {
-      db.insert(schema.companyRegions)
+      await db.insert(schema.companyRegions)
         .values({
           company_id: newCompany.id,
           region,
@@ -208,7 +208,7 @@ export async function POST(request: NextRequest) {
     // Insert categories if provided
     const categories: string[] = body.categories || [];
     for (const category of categories) {
-      db.insert(schema.companyCategories)
+      await db.insert(schema.companyCategories)
         .values({
           company_id: newCompany.id,
           category,

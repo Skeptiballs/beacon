@@ -1,28 +1,16 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import path from "path";
-import fs from "fs";
+import { migrate } from "drizzle-orm/libsql/migrator";
+import { db } from "./index";
 
-// Ensure data directory exists
-const dataDir = path.join(process.cwd(), "data");
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+async function runMigrations() {
+  console.log("Running migrations...");
+  
+  try {
+    await migrate(db, { migrationsFolder: "./lib/db/migrations" });
+    console.log("Migrations complete!");
+  } catch (error) {
+    console.error("Migration failed:", error);
+    process.exit(1);
+  }
 }
 
-const dbPath = path.join(dataDir, "beacon.db");
-const sqlite = new Database(dbPath);
-const db = drizzle(sqlite);
-
-// Run migrations
-console.log("Running migrations...");
-migrate(db, { migrationsFolder: "./lib/db/migrations" });
-console.log("Migrations complete!");
-
-sqlite.close();
-
-
-
-
-
-
+runMigrations();

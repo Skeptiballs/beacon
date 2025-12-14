@@ -86,9 +86,9 @@ export function WaitlistSection() {
                         <CheckCircle2 className="h-8 w-8 text-emerald-500" />
                       </div>
                       <div className="space-y-1">
-                        <h3 className="text-xl font-semibold text-emerald-500">You're on the list!</h3>
+                        <h3 className="text-xl font-semibold text-emerald-500">You&apos;re on the list!</h3>
                         <p className="text-muted-foreground text-sm">
-                          We'll notify {email ? email : "you"} when we open up spots.
+                          We&apos;ll notify {email ? email : "you"} when we open up spots.
                         </p>
                       </div>
                       <Button

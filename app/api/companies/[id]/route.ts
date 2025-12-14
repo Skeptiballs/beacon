@@ -44,7 +44,7 @@ export async function GET(
     }
 
     // Get company
-    const company = db
+    const company = await db
       .select()
       .from(schema.companies)
       .where(eq(schema.companies.id, id))
@@ -58,20 +58,20 @@ export async function GET(
     }
 
     // Get regions for this company
-    const regions = db
+    const regionsData = await db
       .select()
       .from(schema.companyRegions)
       .where(eq(schema.companyRegions.company_id, id))
-      .all()
-      .map((r) => r.region);
+      .all();
+    const regions = regionsData.map((r) => r.region);
 
     // Get categories for this company
-    const categories = db
+    const categoriesData = await db
       .select()
       .from(schema.companyCategories)
       .where(eq(schema.companyCategories.company_id, id))
-      .all()
-      .map((c) => c.category);
+      .all();
+    const categories = categoriesData.map((c) => c.category);
 
     return NextResponse.json(toCompanyResponse(company, regions, categories));
   } catch (error) {
@@ -121,7 +121,7 @@ export async function PUT(
     }
 
     // Check if company exists
-    const existingCompany = db
+    const existingCompany = await db
       .select()
       .from(schema.companies)
       .where(eq(schema.companies.id, id))
@@ -140,7 +140,7 @@ export async function PUT(
     );
 
     // Update company
-    const updatedCompany = db
+    const updatedCompany = await db
       .update(schema.companies)
       .set({
         name: body.name.trim(),
@@ -162,18 +162,18 @@ export async function PUT(
       .get();
 
     // Delete existing regions and categories
-    db.delete(schema.companyRegions)
+    await db.delete(schema.companyRegions)
       .where(eq(schema.companyRegions.company_id, id))
       .run();
 
-    db.delete(schema.companyCategories)
+    await db.delete(schema.companyCategories)
       .where(eq(schema.companyCategories.company_id, id))
       .run();
 
     // Insert new regions if provided
     const regions: string[] = body.regions || [];
     for (const region of regions) {
-      db.insert(schema.companyRegions)
+      await db.insert(schema.companyRegions)
         .values({
           company_id: id,
           region,
@@ -184,7 +184,7 @@ export async function PUT(
     // Insert new categories if provided
     const categories: string[] = body.categories || [];
     for (const category of categories) {
-      db.insert(schema.companyCategories)
+      await db.insert(schema.companyCategories)
         .values({
           company_id: id,
           category,

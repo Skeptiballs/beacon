@@ -5,12 +5,7 @@ export default defineConfig({
   out: "./lib/db/migrations",
   dialect: "sqlite",
   dbCredentials: {
-    url: "./data/beacon.db",
+    url: process.env.TURSO_DATABASE_URL || "file:./data/beacon.db",
+    token: process.env.TURSO_AUTH_TOKEN,
   },
 });
-
-
-
-
-
-

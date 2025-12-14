@@ -132,7 +132,7 @@ export function LandingSearch() {
             </div>
           ) : debouncedQuery.length > 1 ? (
             <div className="p-8 text-center">
-              <p className="text-sm text-muted-foreground">No results found for "{debouncedQuery}"</p>
+              <p className="text-sm text-muted-foreground">No results found for &quot;{debouncedQuery}&quot;</p>
             </div>
           ) : null}
         </div>
@@ -140,3 +140,4 @@ export function LandingSearch() {
     </div>
   );
 }
+
