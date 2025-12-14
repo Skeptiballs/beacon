@@ -1,9 +1,9 @@
 // Application configuration constants
 export const APP_CONFIG = {
-  name: "Beacon",
-  tagline: "Customer intelligence, starting with your key accounts.",
+  name: "Portstack",
+  tagline: "The Intelligent Maritime Database",
   description:
-    "Beacon helps you track and understand your key customers and their products.",
+    "Find the right software for your port. Discover and compare maritime technology solutions.",
   version: "0.1.0",
 } as const;
 

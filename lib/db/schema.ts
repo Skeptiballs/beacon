@@ -60,6 +60,18 @@ export const waitlist = sqliteTable("waitlist", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
+// Feedback - user reports and suggestions
+export const feedback = sqliteTable("feedback", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  type: text("type").notNull(), // 'missing_company', 'feature_request', 'bug', 'other'
+  content: text("content").notNull(),
+  email: text("email"),
+  status: text("status").default('pending'), // 'pending', 'reviewed', 'resolved'
+  created_at: text("created_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
 // Relations for type-safe joins
 export const companiesRelations = relations(companies, ({ many }) => ({
   regions: many(companyRegions),
@@ -99,4 +111,5 @@ export type CompanyNote = typeof companyNotes.$inferSelect;
 export type NewCompanyNote = typeof companyNotes.$inferInsert;
 export type WaitlistEntry = typeof waitlist.$inferSelect;
 export type NewWaitlistEntry = typeof waitlist.$inferInsert;
-
+export type Feedback = typeof feedback.$inferSelect;
+export type NewFeedback = typeof feedback.$inferInsert;

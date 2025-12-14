@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { MainShell } from "@/components/layout/MainShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { CompanyTable } from "@/components/companies/CompanyTable";
@@ -8,11 +9,18 @@ import { CompanyFilters } from "@/components/companies/CompanyFilters";
 import { PresetFilters } from "@/components/companies/PresetFilters";
 import { AddCompanyDialog } from "@/components/companies/AddCompanyDialog";
 import { useCompanies } from "@/hooks/useCompanies";
-import { CompanyFilters as Filters } from "@/lib/types";
+import { CompanyFilters as Filters, CategoryCode, RegionCode } from "@/lib/types";
 import { Building2, Filter } from "lucide-react";
 
-export default function CompaniesPage() {
-  const [filters, setFilters] = useState<Filters>({});
+function CompaniesContent() {
+  const searchParams = useSearchParams();
+  
+  const [filters, setFilters] = useState<Filters>(() => ({
+    category: (searchParams.get("category") as CategoryCode) || undefined,
+    region: (searchParams.get("region") as RegionCode) || undefined,
+    search: searchParams.get("search") || undefined,
+  }));
+
   const { data, isLoading, error } = useCompanies(filters);
 
   // Check if any filters are active
@@ -26,7 +34,7 @@ export default function CompaniesPage() {
         title="Companies"
         description="Discover and track companies in the maritime industry."
       >
-        <AddCompanyDialog />
+        {/* <AddCompanyDialog /> */}
       </PageHeader>
 
       <CompanyFilters filters={filters} onFiltersChange={setFilters} />
@@ -78,3 +86,10 @@ export default function CompaniesPage() {
   );
 }
 
+export default function CompaniesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <CompaniesContent />
+    </Suspense>
+  );
+}

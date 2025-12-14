@@ -65,7 +65,7 @@ async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Respons
   try {
     return await fetch(url, {
       headers: {
-        "User-Agent": "Beacon-Agent/1.0",
+        "User-Agent": "Portstack-Agent/1.0",
       },
       signal: controller.signal,
     });

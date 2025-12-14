@@ -1,10 +1,10 @@
-# Beacon
+# Portstack
 
-Customer intelligence, starting with your key accounts.
+The Intelligent Maritime Database.
 
 ## Overview
 
-Beacon is a minimal but scalable MVP for a customer intelligence app. It helps you track and understand your key customers.
+Portstack is a minimal but scalable MVP for a maritime technology database. It helps you discover and compare maritime technology solutions.
 
 ### Features (MVP)
 
@@ -59,7 +59,7 @@ npm run dev
 ## Project Structure
 
 ```
-beacon/
+portstack/
 ├── app/                    # Next.js App Router pages
 │   ├── api/               # API routes
 │   │   └── companies/     # Companies CRUD endpoints

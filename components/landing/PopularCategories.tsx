@@ -51,7 +51,7 @@ export function PopularCategories() {
 
           <div className="pt-4">
             <Link
-              href="/companies"
+              href={`/companies?category=${activeCategory}`}
               className="text-sm font-medium text-emerald-500 hover:text-emerald-600 flex items-center gap-2"
             >
               See all {CATEGORY_LABELS[activeCategory]} Software

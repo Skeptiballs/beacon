@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { LandingSearch } from "@/components/landing/LandingSearch";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { RadarGraphic } from "@/components/landing/RadarGraphic";
 import { PopularCategories } from "@/components/landing/PopularCategories";
 import { WaitlistSection } from "@/components/landing/WaitlistSection";
@@ -42,28 +41,7 @@ export default function LandingPage() {
               </div>
 
               {/* Search Box */}
-              <div className="relative max-w-lg group animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
-                {/* Glow effect on hover/focus */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/30 via-blue-500/30 to-emerald-500/30 rounded-2xl blur opacity-20 group-hover:opacity-50 transition duration-500" />
-                
-                <form action="/companies" className="relative flex items-center p-1.5 bg-background/60 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl">
-                  <div className="pl-4 text-muted-foreground">
-                    <Search className="h-5 w-5" />
-                  </div>
-                  <Input 
-                    name="q"
-                    placeholder="Search companies, products, categories..." 
-                    className="h-14 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/50 text-base"
-                  />
-                  <Button 
-                    type="submit" 
-                    size="lg"
-                    className="h-12 px-6 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium shadow-[0_0_20px_-5px_rgba(16,185,129,0.4)] transition-all hover:shadow-[0_0_25px_-5px_rgba(16,185,129,0.6)] hover:scale-[1.02]"
-                  >
-                    Search
-                  </Button>
-                </form>
-              </div>
+              <LandingSearch />
               
               {/* Links */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-12 pt-2 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">

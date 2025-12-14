@@ -8,7 +8,7 @@ import { APP_CONFIG } from "@/config/app";
 const inter = Inter({ subsets: ["latin"], variable: "--font-geist-sans" });
 
 export const metadata: Metadata = {
-  title: "Beacon",
+  title: APP_CONFIG.name,
   description: APP_CONFIG.description,
   icons: {
     icon: [

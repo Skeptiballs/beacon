@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { APP_CONFIG, NAV_LINKS } from "@/config/app";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FeedbackDialog } from "@/components/feedback/FeedbackDialog";
 import { Radar } from "lucide-react";
 
 export function AppHeader() {
@@ -37,10 +38,13 @@ export function AppHeader() {
           ))}
         </nav>
 
-        {/* Join Waitlist button */}
-        <Button asChild variant="default" size="sm">
-          <Link href="/waitlist">Join Waitlist</Link>
-        </Button>
+        {/* Feedback and Join Waitlist buttons */}
+        <div className="flex items-center gap-2">
+          <FeedbackDialog />
+          <Button asChild variant="default" size="sm">
+            <Link href="/waitlist">Join Waitlist</Link>
+          </Button>
+        </div>
       </div>
     </header>
   );

@@ -176,6 +176,13 @@
       "when": 1733960015000,
       "tag": "0024_create_waitlist_index",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1765650754658,
+      "tag": "0025_yellow_exiles",
+      "breakpoints": true
     }
   ]
 }

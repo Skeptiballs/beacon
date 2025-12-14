@@ -1,5 +1,5 @@
 {
-  "name": "beacon",
+  "name": "portstack",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,10 @@
     "db:migrate": "tsx lib/db/migrate.ts",
     "db:seed": "tsx lib/db/seed.ts",
     "db:seed-industry": "tsx lib/db/seed-industry-data.ts",
+    "db:fetch-logos": "tsx lib/db/fetch-logos.ts",
+    "db:check-logos": "tsx lib/db/check-logos.ts",
+    "db:upgrade-logos": "tsx lib/db/upgrade-logos.ts",
+    "db:fix-logos": "tsx lib/db/fix-specific-logos.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
@@ -34,7 +38,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

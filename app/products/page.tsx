@@ -27,7 +27,7 @@ export default function ProductsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Product intelligence is coming soon to Beacon. Track competitive 
+            Product intelligence is coming soon to Portstack. Track competitive 
             products, analyze market positioning, and understand how your 
             offerings compare.
           </p>

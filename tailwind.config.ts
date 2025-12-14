@@ -20,7 +20,7 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Custom Beacon color palette - dark professional theme
+        // Custom Portstack color palette - dark professional theme
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
