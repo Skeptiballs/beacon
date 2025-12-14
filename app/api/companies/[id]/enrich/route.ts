@@ -54,7 +54,7 @@ export async function POST(
         const nameInput = typeof body.name === "string" ? body.name : "";
         const websiteInput = typeof body.website === "string" ? body.website : undefined;
 
-        const company = await db
+        const company = db
           .select()
           .from(schema.companies)
           .where(eq(schema.companies.id, id))
@@ -66,19 +66,19 @@ export async function POST(
           return;
         }
 
-        const regionsRows = await db
+        const regions = db
           .select()
           .from(schema.companyRegions)
           .where(eq(schema.companyRegions.company_id, id))
-          .all();
-        const regions = regionsRows.map((r) => r.region);
+          .all()
+          .map((r) => r.region);
 
-        const categoriesRows = await db
+        const categories = db
           .select()
           .from(schema.companyCategories)
           .where(eq(schema.companyCategories.company_id, id))
-          .all();
-        const categories = categoriesRows.map((c) => c.category);
+          .all()
+          .map((c) => c.category);
 
         const existing = toCompanyResponse(company, regions, categories);
 
